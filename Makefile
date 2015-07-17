@@ -7,7 +7,7 @@ clean:
 .PHONY: clean
 
 libunrandom.so: unrandom.c
-	gcc -shared -fPIC -ldl -o $@ $<
+	gcc -shared -fPIC -o $@ $< -ldl
 
 test: test.c
 	gcc -o $@ $<
