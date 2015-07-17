@@ -7,10 +7,13 @@
 void (*orig_srand)(unsigned int seed);
 
 void srand(unsigned int seed) {
+  char *v;
+
   if(!orig_srand) {
     orig_srand = dlsym(RTLD_NEXT, "srand");
     assert(orig_srand);
   }
 
-  orig_srand(0);
+  v = getenv("UNRANDOM_SEED");
+  orig_srand(v?atoi(v):0);
 }
