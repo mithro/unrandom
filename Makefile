@@ -1,5 +1,6 @@
 do-test: test libunrandom.so
 	LD_PRELOAD=$$(pwd)/libunrandom.so ./test
+	LD_PRELOAD=$$(pwd)/libunrandom.so ls -l -a
 .PHONY: do-test
 
 clean:
