@@ -10,4 +10,4 @@ libunrandom.so: unrandom.c
 	gcc -shared -fPIC -o $@ $< -ldl
 
 test: test.c
-	gcc -o $@ $<
+	gcc -std=c99 -o $@ $<

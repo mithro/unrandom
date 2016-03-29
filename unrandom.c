@@ -18,17 +18,17 @@ void srand(unsigned int seed) {
   orig_srand(v?atoi(v):0);
 }
 
-static int (*orig_open)(const char *pathname, int flags);
+static int (*orig_open)(const char *pathname, int flags, mode_t mode);
 
-int open(const char *pathname, int flags) {
+int open(const char *pathname, int flags, mode_t mode) {
   if(!orig_open) {
     orig_open = dlsym(RTLD_NEXT, "open");
     assert(orig_open);
   }
 
-  if (strcmp(pathname, "/dev/urandom") == 0) {
-    return orig_open("/dev/zero", flags);
+  if (strcmp(pathname, "/dev/urandom", mode) == 0) {
+    return orig_open("/dev/zero", flags, mode);
   } else {
-    return orig_open(pathname, flags);
+    return orig_open(pathname, flags, mode);
   }
 }

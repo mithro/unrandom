@@ -23,14 +23,17 @@ int main() {
 
   puts("open('/dev/urandom'): ");
   int fd1 = open("/dev/urandom", O_RDONLY);
-  char bytes1;
-  read(fd1, &bytes1, 1);
-  if (bytes1 != '\0') {
-    notok += 1;
-    puts("fail\n");
-  } else {
-    puts("ok\n");
+  char bytes[5] = { 'a', 'b', 'c', 'd', 'e'};
+  read(fd1, bytes, 5);
+  for (int i = 0; i < 5; i++) {
+    if (bytes[i] != '\0') {
+      notok += 1;
+      puts("f");
+    } else {
+      puts("o\n");
+    }
   }
+  puts("\n");
 
   puts("open('test.c'): ");
   int fd2 = open("test.c", O_RDONLY);
