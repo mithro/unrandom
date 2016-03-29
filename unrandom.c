@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <assert.h>
 
-void (*orig_srand)(unsigned int seed);
+static void (*orig_srand)(unsigned int seed);
 
 void srand(unsigned int seed) {
   char *v;
@@ -18,7 +18,7 @@ void srand(unsigned int seed) {
   orig_srand(v?atoi(v):0);
 }
 
-int (*orig_open)(const char *pathname, int flags);
+static int (*orig_open)(const char *pathname, int flags);
 
 int open(const char *pathname, int flags) {
   if(!orig_open) {
