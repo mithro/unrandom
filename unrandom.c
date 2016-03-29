@@ -17,3 +17,18 @@ void srand(unsigned int seed) {
   v = getenv("UNRANDOM_SEED");
   orig_srand(v?atoi(v):0);
 }
+
+int (*orig_open)(const char *pathname, int flags);
+
+int open(const char *pathname, int flags) {
+  if(!orig_open) {
+    orig_open = dlsym(RTLD_NEXT, "open");
+    assert(orig_open);
+  }
+
+  if (strcmp(pathname, "/dev/urandom") == 0) {
+    return orig_open("/dev/zero", flags);
+  } else {
+    return orig_open(pathname, flags);
+  }
+}
